@@ -8,37 +8,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Overlay = (function (_React$Component) {
-    _inherits(Overlay, _React$Component);
+var React = window.React;
 
-    function Overlay(props) {
-        _classCallCheck(this, Overlay);
+var Header = (function (_React$Component) {
+    _inherits(Header, _React$Component);
 
-        _get(Object.getPrototypeOf(Overlay.prototype), 'constructor', this).call(this, props);
-        this.state = { isActive: props.isActive };
-    }
-
-    _createClass(Overlay, [{
-        key: 'render',
-        value: function render() {
-            return React.createElement(Header, { duration: this.props.Encounter.duration,
-                encdps: this.props });
-        }
-    }]);
-
-    return Overlay;
-})(React.Component);
-
-var Header = (function (_React$Component2) {
-    _inherits(Header, _React$Component2);
-
-    function Header() {
+    function Header(props) {
         _classCallCheck(this, Header);
 
-        _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
+        _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).call(this, props);
     }
 
     _createClass(Header, [{
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps) {
+            return nextProps.encdps !== '---';
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -56,34 +42,39 @@ var Header = (function (_React$Component2) {
     return Header;
 })(React.Component);
 
+var Overlay = (function (_React$Component2) {
+    _inherits(Overlay, _React$Component2);
+
+    function Overlay(props) {
+        _classCallCheck(this, Overlay);
+
+        _get(Object.getPrototypeOf(Overlay.prototype), 'constructor', this).call(this, props);
+        this.state = { isActive: props.isActive };
+    }
+
+    _createClass(Overlay, [{
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            return nextProps.parseData.Encounter.encdps !== '---';
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var encounter = this.props.parseData.Encounter;
+            return React.createElement(Header, {
+                duration: encounter.duration,
+                encdps: encounter.encdps
+            });
+        }
+    }]);
+
+    return Overlay;
+})(React.Component);
+
 document.addEventListener('onOverlayDataUpdate', function (e) {
 
-    console.log(e);
+    //console.log(e);
 
     React.render(React.createElement(Overlay, { parseData: e.detail }), document.getElementById('container'));
 });
-
-//var Overlay = React.createClass({
-//    render: function() {
-//        return (
-//            <Header
-//                duration={this.props.Encounter.duration}
-//                encdps={this.props}
-//            />
-//        );
-//    }
-//});
-//
-//
-//
-//var Header = React.createClass({
-//    render: function() {
-//        return (
-//            <header>
-//                Duration: {this.props.duration}<br/>
-//                EncDPS: {this.props.encdps}
-//            </header>
-//        );
-//    }
-//});
 //# sourceMappingURL=all.js.map
