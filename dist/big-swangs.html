@@ -5,25 +5,11 @@
     <title>Big Swangs</title>
 
     <link rel="stylesheet" href="css/big-swangs.css"/>
-
+    
     <script src="js/vendor/react-0.13.3.js"></script>
-    <script src="js/vendor/JSXTransformer-0.13.3.js"></script>
     <!--<script src="js/test-data.js"></script>-->
-    <script src="js/big-swangs.js" type="text/jsx"></script>
+    <script src="js/all.js"></script>
 
-    <script type="text/jsx">
-        document.addEventListener('onOverlayDataUpdate', function(e) {
-
-            console.log(e);
-
-            React.render(
-                <Overlay parseData={e.detail} />,
-
-                document.getElementById('container')
-            );
-        });
-
-    </script>
 </head>
 <body>
     <div id="container">

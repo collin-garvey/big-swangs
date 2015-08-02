@@ -23,6 +23,17 @@ class Header extends React.Component {
     }
 }
 
+document.addEventListener('onOverlayDataUpdate', function(e) {
+
+    console.log(e);
+
+    React.render(
+        <Overlay parseData={e.detail} />,
+
+        document.getElementById('container')
+    );
+});
+
 //var Overlay = React.createClass({
 //    render: function() {
 //        return (
