@@ -1,0 +1,27 @@
+{
+  "name": "big-swangs",
+  "version": "1.0.0",
+  "description": "FFXIV ACT parser theme",
+  "main": "Gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/collin-garvey/big-swangs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/collin-garvey/big-swangs/issues"
+  },
+  "homepage": "https://github.com/collin-garvey/big-swangs#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-watch": "^4.3.4"
+  }
+}
