@@ -7,18 +7,28 @@
     <link rel="stylesheet" href="css/vendor/normalize.min.css"/>
     <link rel="stylesheet" href="css/big-swangs.css"/>
 
-    <script src="js/vendor/react-0.13.3.min.js"></script>
+    <script src="js/vendor/react-0.13.3.js"></script>
     <script src="js/vendor/JSXTransformer-0.13.3.js"></script>
-    <script src="js/big-swangs.js"></script>
+    <!--<script src="js/test-data.js"></script>-->
+    <script src="js/big-swangs.js" type="text/jsx"></script>
+
+    <script type="text/jsx">
+        document.addEventListener('onOverlayDataUpdate', function(e) {
+
+            console.log(e);
+
+            React.render(
+                <Overlay parseData={e.detail} />,
+
+                document.getElementById('container')
+            );
+        });
+
+    </script>
 </head>
 <body>
-    <div class="overlay">
-        <header>
-
-        </header>
-        <main>
-
-        </main>
+    <div id="container">
+        <em class="blank-state">Awaiting data.</em>
     </div>
 </body>
 </html>
