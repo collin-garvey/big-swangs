@@ -89,9 +89,49 @@ li {
 }
 
 .header {
+    @include clearfix;
     padding     : 5px 8px;
     color       : #E2EBF5;
     text-shadow : -1px 0 3px #217AA2, 0 1px 3px #217AA2, 1px 0 3px #217AA2, 0 -1px 3px #217AA2;
+}
+
+.header__left {
+    width : 50%;
+    float : left;
+}
+
+.header__right {
+    width : 50%;
+    float : right;
+}
+
+.encounter__time {
+    display : block;
+}
+
+.encounter__raid-dps {
+    display : block;
+}
+
+.encounter__status {
+    display         : block;
+    float           : right;
+    width           : 18px;
+    height          : 18px;
+    background      : transparent center center no-repeat;
+    background-size : contain;
+}
+
+.active {
+    .encounter__status {
+        background-image : url(../images/interface/active.png);
+    }
+}
+
+.inactive {
+    .encounter__status {
+        background-image : url(../images/interface/inactive.png);
+    }
 }
 
 .combatant {

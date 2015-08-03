@@ -33,12 +33,28 @@ var Header = (function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'header',
-                { className: 'header' },
-                'Duration: ',
-                this.props.duration,
-                React.createElement('br', null),
-                'EncDPS: ',
-                this.props.encdps
+                { className: 'header ' + (this.props.isActive ? 'active' : 'inactive') },
+                React.createElement(
+                    'div',
+                    { className: 'header__left' },
+                    React.createElement(
+                        'span',
+                        { className: 'encounter__time' },
+                        'Time: ',
+                        this.props.duration
+                    ),
+                    React.createElement(
+                        'span',
+                        { className: 'encounter__raid-dps' },
+                        'Raid: ',
+                        this.props.encdps
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'header__right' },
+                    React.createElement('i', { className: 'encounter__status' })
+                )
             );
         }
     }]);
@@ -160,7 +176,8 @@ var Overlay = (function (_React$Component4) {
                 { className: 'overlay' },
                 React.createElement(Header, {
                     duration: encounter.duration,
-                    encdps: encounter.encdps
+                    encdps: encounter.encdps,
+                    isActive: this.props.parseData.isActive
                 }),
                 React.createElement(CombatantList, {
                     combatants: combatant,

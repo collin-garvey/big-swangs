@@ -15,9 +15,15 @@ class Header extends React.Component {
 
     render() {
         return (
-            <header className="header">
-                Duration: {this.props.duration}<br/>
-                EncDPS: {this.props.encdps}
+            <header className={`header ${this.props.isActive ? 'active': 'inactive'}`}>
+                <div className="header__left">
+                    <span className="encounter__time">Time: {this.props.duration}</span>
+                    <span className="encounter__raid-dps">Raid: {this.props.encdps}</span>
+                </div>
+
+                <div className="header__right">
+                    <i className="encounter__status"></i>
+                </div>
             </header>
         );
     }
@@ -94,6 +100,7 @@ class Overlay extends React.Component {
                 <Header
                     duration={encounter.duration}
                     encdps={encounter.encdps}
+                    isActive={this.props.parseData.isActive}
                     />
                 <CombatantList
                     combatants={combatant}
