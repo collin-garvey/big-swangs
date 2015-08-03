@@ -1,3 +1,9 @@
+function classify(job) {
+    if(typeof job === 'string') {
+        return job.replace(/\s+/g, '-').toLowerCase();
+    }
+}
+
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -9,7 +15,7 @@ class Header extends React.Component {
 
     render() {
         return (
-            <header>
+            <header className="header">
                 Duration: {this.props.duration}<br/>
                 EncDPS: {this.props.encdps}
             </header>
@@ -17,35 +23,44 @@ class Header extends React.Component {
     }
 }
 
-class CombatantRow extends React.Component {
+class Combatant extends React.Component {
     render() {
         return(
-            <li className={`combatant-row ${this.props.isSelf ? ' self' : ''}`}>
-                <span>{this.props.name}</span>
-                <span>{this.props.dps}</span>
+            <li className={`combatant ${classify(this.props.job)} ${this.props.isSelf ? 'self' : ''}`}>
+                <i className="combatant__icon"></i>
+                <span className="combatant__name">{this.props.name}</span>
+                <span className="combatant__dps">{this.props.dps}</span>
+                <span className="combatant__damage">{this.props.damage}</span>
+                <span className="combatant__bar" style={{width: this.props.damageOfTotal + '%'}}></span>
             </li>
         );
     }
 }
 
-class Combatants extends React.Component {
-    shouldComponentUpdate(nextProps) {
-        return true;
-    }
-
+class CombatantList extends React.Component {
     render() {
         var combatantsArray = [];
         var combatants = this.props.combatants;
+        var dmgLeader = 0;
+
+        for(var c in combatants) {
+            if (combatants.hasOwnProperty(c)) {
+                dmgLeader = Math.max(combatants[c].damage, dmgLeader);
+            }
+        }
 
         for(var combatant in combatants) {
             if(combatants.hasOwnProperty(combatant)) {
                 var isSelf = (combatants[combatant].name === 'YOU');
 
                 combatantsArray.push(
-                    <CombatantRow
+                    <Combatant
                         key={combatant}
                         name={combatants[combatant].name}
+                        job={combatants[combatant].Job}
+                        damage={combatants[combatant]['damage%']}
                         dps={combatants[combatant].dps}
+                        damageOfTotal={(combatants[combatant].damage / dmgLeader) * 100}
                         isSelf={isSelf}
                         />
                 );
@@ -75,12 +90,12 @@ class Overlay extends React.Component {
         var encounter = this.props.parseData.Encounter;
 
         return (
-            <div>
+            <div className="overlay">
                 <Header
                     duration={encounter.duration}
                     encdps={encounter.encdps}
                     />
-                <Combatants
+                <CombatantList
                     combatants={combatant}
                     encounterDamage={encounter.damage}
                     />
@@ -90,6 +105,9 @@ class Overlay extends React.Component {
 }
 
 document.addEventListener('onOverlayDataUpdate', function(e) {
+
+    //console.log(e.detail);
+
     React.render(
         <Overlay parseData={e.detail} />,
 

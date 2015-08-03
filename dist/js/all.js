@@ -8,6 +8,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function classify(job) {
+    if (typeof job === 'string') {
+        return job.replace(/\s+/g, '-').toLowerCase();
+    }
+}
+
 var Header = (function (_React$Component) {
     _inherits(Header, _React$Component);
 
@@ -27,7 +33,7 @@ var Header = (function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'header',
-                null,
+                { className: 'header' },
                 'Duration: ',
                 this.props.duration,
                 React.createElement('br', null),
@@ -40,66 +46,78 @@ var Header = (function (_React$Component) {
     return Header;
 })(React.Component);
 
-var CombatantRow = (function (_React$Component2) {
-    _inherits(CombatantRow, _React$Component2);
+var Combatant = (function (_React$Component2) {
+    _inherits(Combatant, _React$Component2);
 
-    function CombatantRow() {
-        _classCallCheck(this, CombatantRow);
+    function Combatant() {
+        _classCallCheck(this, Combatant);
 
-        _get(Object.getPrototypeOf(CombatantRow.prototype), 'constructor', this).apply(this, arguments);
+        _get(Object.getPrototypeOf(Combatant.prototype), 'constructor', this).apply(this, arguments);
     }
 
-    _createClass(CombatantRow, [{
+    _createClass(Combatant, [{
         key: 'render',
         value: function render() {
             return React.createElement(
                 'li',
-                { className: 'combatant-row ' + (this.props.isSelf ? ' self' : '') },
+                { className: 'combatant ' + classify(this.props.job) + ' ' + (this.props.isSelf ? 'self' : '') },
+                React.createElement('i', { className: 'combatant__icon' }),
                 React.createElement(
                     'span',
-                    null,
+                    { className: 'combatant__name' },
                     this.props.name
                 ),
                 React.createElement(
                     'span',
-                    null,
+                    { className: 'combatant__dps' },
                     this.props.dps
-                )
+                ),
+                React.createElement(
+                    'span',
+                    { className: 'combatant__damage' },
+                    this.props.damage
+                ),
+                React.createElement('span', { className: 'combatant__bar', style: { width: this.props.damageOfTotal + '%' } })
             );
         }
     }]);
 
-    return CombatantRow;
+    return Combatant;
 })(React.Component);
 
-var Combatants = (function (_React$Component3) {
-    _inherits(Combatants, _React$Component3);
+var CombatantList = (function (_React$Component3) {
+    _inherits(CombatantList, _React$Component3);
 
-    function Combatants() {
-        _classCallCheck(this, Combatants);
+    function CombatantList() {
+        _classCallCheck(this, CombatantList);
 
-        _get(Object.getPrototypeOf(Combatants.prototype), 'constructor', this).apply(this, arguments);
+        _get(Object.getPrototypeOf(CombatantList.prototype), 'constructor', this).apply(this, arguments);
     }
 
-    _createClass(Combatants, [{
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate(nextProps) {
-            return true;
-        }
-    }, {
+    _createClass(CombatantList, [{
         key: 'render',
         value: function render() {
             var combatantsArray = [];
             var combatants = this.props.combatants;
+            var dmgLeader = 0;
+
+            for (var c in combatants) {
+                if (combatants.hasOwnProperty(c)) {
+                    dmgLeader = Math.max(combatants[c].damage, dmgLeader);
+                }
+            }
 
             for (var combatant in combatants) {
                 if (combatants.hasOwnProperty(combatant)) {
                     var isSelf = combatants[combatant].name === 'YOU';
 
-                    combatantsArray.push(React.createElement(CombatantRow, {
+                    combatantsArray.push(React.createElement(Combatant, {
                         key: combatant,
                         name: combatants[combatant].name,
+                        job: combatants[combatant].Job,
+                        damage: combatants[combatant]['damage%'],
                         dps: combatants[combatant].dps,
+                        damageOfTotal: combatants[combatant].damage / dmgLeader * 100,
                         isSelf: isSelf
                     }));
                 }
@@ -113,7 +131,7 @@ var Combatants = (function (_React$Component3) {
         }
     }]);
 
-    return Combatants;
+    return CombatantList;
 })(React.Component);
 
 var Overlay = (function (_React$Component4) {
@@ -139,12 +157,12 @@ var Overlay = (function (_React$Component4) {
 
             return React.createElement(
                 'div',
-                null,
+                { className: 'overlay' },
                 React.createElement(Header, {
                     duration: encounter.duration,
                     encdps: encounter.encdps
                 }),
-                React.createElement(Combatants, {
+                React.createElement(CombatantList, {
                     combatants: combatant,
                     encounterDamage: encounter.damage
                 })
@@ -156,6 +174,9 @@ var Overlay = (function (_React$Component4) {
 })(React.Component);
 
 document.addEventListener('onOverlayDataUpdate', function (e) {
+
+    //console.log(e.detail);
+
     React.render(React.createElement(Overlay, { parseData: e.detail }), document.getElementById('container'));
 });
 //# sourceMappingURL=all.js.map

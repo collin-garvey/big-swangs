@@ -1,5 +1,207 @@
-@import 'vendor/normalize.min';
+$jobs : (
+        'acn': dps,
+        'arc': dps,
+        'ast': healer,
+        'blm': dps,
+        'brd': dps,
+        'choco': pet,
+        'cnj': healer,
+        'drg': dps,
+        'drk': tank,
+        'eos': pet,
+        'error': unknown,
+        'garuda': pet,
+        'gld': tank,
+        'ifrit': pet,
+        'limit': special,
+        'lnc': dps,
+        'mch': dps,
+        'mnk': dps,
+        'mrd': tank,
+        'nin': dps,
+        'pgl': dps,
+        'pld': tank,
+        'pug': dps,
+        'rog': dps,
+        'sch': healer,
+        'selene': pet,
+        'smn': dps,
+        'thm': dps,
+        'titan': pet,
+        'war': tank,
+        'whm': healer
+);
 
-#container {
-    background: rgba(0, 0, 0, 0.20);
+$bodyFont : 'Titillium Web', sans-serif;
+$tankColor : #2980b9;
+$healerColor : #27ae60;
+$dpsColor : #c0392b;
+$petColor : #16a085;
+$specialColor : #f39c12;
+$unknownColor : #2c3e50;
+
+@mixin clearfix {
+    &::after {
+        clear   : both;
+        content : "";
+        display : table;
+    }
+}
+
+@mixin glow-text-blue {
+    color       : #E2EBF5;
+    text-shadow : -1px 0 3px #217AA2, 0 1px 3px #217AA2, 1px 0 3px #217AA2, 0 -1px 3px #217AA2;
+}
+
+* {
+    margin     : 0;
+    padding    : 0;
+    box-sizing : border-box;
+}
+
+html {
+    height      : 100%;
+    overflow    : hidden;
+    font-family : $bodyFont;
+}
+
+li {
+    list-style : none;
+}
+
+.container {
+    background : rgba(0, 0, 0, 0.20);
+    min-width  : 300px;
+    overflow   : hidden;
+}
+
+.overlay {
+    color          : #ffffff;
+    text-transform : uppercase;
+    font-size      : 12px;
+}
+
+.blank-state {
+    display    : block;
+    text-align : center;
+    font-style : italic;
+    color      : #ffffff;
+}
+
+.header {
+    padding     : 5px 8px;
+    color       : #E2EBF5;
+    text-shadow : -1px 0 3px #217AA2, 0 1px 3px #217AA2, 1px 0 3px #217AA2, 0 -1px 3px #217AA2;
+}
+
+.combatant {
+    @include clearfix;
+    position      : relative;
+    height        : 20px;
+    margin-bottom : 1px;
+    line-height   : 20px;
+}
+
+.combatant__bar {
+    display    : block;
+    position   : absolute;
+    top        : 0;
+    left       : 0;
+    height     : 20px;
+    z-index    : -1;
+    transition : all .35s ease;
+}
+
+.combatant__name {
+    display       : inline-block;
+    text-overflow : ellipsis;
+    white-space   : nowrap;
+}
+
+.combatant__dps {
+    display    : block;
+    float      : right;
+    background : rgba(0, 0, 0, 0.2);
+    text-align : right;
+    padding    : 0 5px;
+    font-style : italic;
+}
+
+.combatant__damage {
+    float        : right;
+    margin-right : 10px;
+    text-align   : right;
+}
+
+.combatant__icon {
+    display         : block;
+    float           : left;
+    width           : 24px;
+    height          : 20px;
+    padding-right   : 2px;
+    margin-right    : 5px;
+    background      : rgba(0, 0, 0, 0.2) center center no-repeat;
+    background-size : contain;
+}
+
+@each $job, $role in $jobs {
+    .#{$job} {
+        @if $role == tank {
+            background-color : transparentize($tankColor, 0.75);
+
+            .combatant__bar {
+                background-color : $tankColor;
+            }
+        } @else if $role == healer {
+            background-color : transparentize($healerColor, 0.75);
+
+            .combatant__bar {
+                background-color : $healerColor;
+            }
+        } @else if $role == dps {
+            background-color : transparentize($dpsColor, 0.75);
+
+            .combatant__bar {
+                background-color : $dpsColor;
+            }
+        } @else if $role == pet {
+            background-color : transparentize($petColor, 0.75);
+
+            .combatant__bar {
+                background-color : $petColor;
+            }
+        } @else if $role == special {
+            background-color : transparentize($specialColor, 0.75);
+
+            .combatant__bar {
+                background-color : $specialColor;
+            }
+        } @else {
+            background-color : transparentize($unknownColor, 0.75);
+
+            .combatant__bar {
+                background-color : $unknownColor;
+            }
+        }
+
+        .combatant__icon {
+            background-image : url('../images/class-icons/#{$job}.png');
+        }
+
+        .combatant__bar {
+            @if $role == tank {
+                background-color : #2980b9;
+            } @else if $role == healer {
+                background-color : #27ae60;
+            } @else if $role == dps {
+                background-color : #c0392b;
+            } @else if $role == pet {
+                background-color : #16a085;
+            } @else if $role == special {
+                background-color : #f39c12
+            } @else {
+                background-color : #2c3e50;
+            }
+        }
+    }
 }
