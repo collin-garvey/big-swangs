@@ -22,7 +22,10 @@ class Header extends React.Component {
                 </div>
 
                 <div className="header__right">
-                    <i className="encounter__status"></i>
+                    <span className="encounter__name">
+                        <i className="encounter__status"></i>
+                    </span>
+
                 </div>
             </header>
         );
@@ -31,12 +34,15 @@ class Header extends React.Component {
 
 class Combatant extends React.Component {
     render() {
+        var misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses">M:{this.props.misses}</span> : '';
+
         return(
             <li className={`combatant ${classify(this.props.job)} ${this.props.isSelf ? 'self' : ''}`}>
                 <i className="combatant__icon"></i>
                 <span className="combatant__name">{this.props.name}</span>
                 <span className="combatant__dps">{this.props.dps}</span>
                 <span className="combatant__damage">{this.props.damage}</span>
+                {misses}
                 <span className="combatant__bar" style={{width: this.props.damageOfTotal + '%'}}></span>
             </li>
         );
@@ -66,6 +72,7 @@ class CombatantList extends React.Component {
                         job={combatants[combatant].Job}
                         damage={combatants[combatant]['damage%']}
                         dps={combatants[combatant].dps}
+                        misses={combatants[combatant].misses}
                         damageOfTotal={(combatants[combatant].damage / dmgLeader) * 100}
                         isSelf={isSelf}
                         />
@@ -113,7 +120,7 @@ class Overlay extends React.Component {
 
 document.addEventListener('onOverlayDataUpdate', function(e) {
 
-    //console.log(e.detail);
+    console.log(e.detail);
 
     React.render(
         <Overlay parseData={e.detail} />,

@@ -71,13 +71,16 @@ li {
 
 .container {
     background : rgba(0, 0, 0, 0.20);
+    box-shadow : 0 0 10px rgba(0, 0, 0, 0.20);
     min-width  : 300px;
+    max-width  : 350px;
     overflow   : hidden;
 }
 
 .overlay {
     color          : #ffffff;
-    text-transform : uppercase;
+    text-transform : none;
+    letter-spacing : 1px;
     font-size      : 12px;
 }
 
@@ -120,6 +123,7 @@ li {
     height          : 18px;
     background      : transparent center center no-repeat;
     background-size : contain;
+    transition      : all 0.3s ease;
 }
 
 .active {
@@ -152,27 +156,6 @@ li {
     transition : all .35s ease;
 }
 
-.combatant__name {
-    display       : inline-block;
-    text-overflow : ellipsis;
-    white-space   : nowrap;
-}
-
-.combatant__dps {
-    display    : block;
-    float      : right;
-    background : rgba(0, 0, 0, 0.2);
-    text-align : right;
-    padding    : 0 5px;
-    font-style : italic;
-}
-
-.combatant__damage {
-    float        : right;
-    margin-right : 10px;
-    text-align   : right;
-}
-
 .combatant__icon {
     display         : block;
     float           : left;
@@ -184,40 +167,73 @@ li {
     background-size : contain;
 }
 
+.combatant__name {
+    display       : block;
+    float         : left;
+    max-width     : 60%;
+    text-overflow : ellipsis;
+    white-space   : nowrap;
+    overflow      : hidden;
+    z-index       : 1;
+}
+
+.combatant__dps {
+    display    : block;
+    float      : right;
+    background : rgba(0, 0, 0, 0.2);
+    text-align : right;
+    padding    : 0 8px;
+    font-style : italic;
+    z-index    : 1;
+}
+
+.combatant__damage {
+    float        : right;
+    margin-right : 8px;
+    text-align   : right;
+}
+
+.combatant__misses {
+    display : block;
+    float   : right;
+    color   : yellow;
+    margin  : 0 8px 0 0;
+}
+
 @each $job, $role in $jobs {
     .#{$job} {
         @if $role == tank {
-            background-color : transparentize($tankColor, 0.75);
+            background-color : transparentize($tankColor, 0.65);
 
             .combatant__bar {
                 background-color : $tankColor;
             }
         } @else if $role == healer {
-            background-color : transparentize($healerColor, 0.75);
+            background-color : transparentize($healerColor, 0.65);
 
             .combatant__bar {
                 background-color : $healerColor;
             }
         } @else if $role == dps {
-            background-color : transparentize($dpsColor, 0.75);
+            background-color : transparentize($dpsColor, 0.65);
 
             .combatant__bar {
                 background-color : $dpsColor;
             }
         } @else if $role == pet {
-            background-color : transparentize($petColor, 0.75);
+            background-color : transparentize($petColor, 0.65);
 
             .combatant__bar {
                 background-color : $petColor;
             }
         } @else if $role == special {
-            background-color : transparentize($specialColor, 0.75);
+            background-color : transparentize($specialColor, 0.65);
 
             .combatant__bar {
                 background-color : $specialColor;
             }
         } @else {
-            background-color : transparentize($unknownColor, 0.75);
+            background-color : transparentize($unknownColor, 0.65);
 
             .combatant__bar {
                 background-color : $unknownColor;

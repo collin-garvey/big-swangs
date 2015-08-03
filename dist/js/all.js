@@ -53,7 +53,11 @@ var Header = (function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'header__right' },
-                    React.createElement('i', { className: 'encounter__status' })
+                    React.createElement(
+                        'span',
+                        { className: 'encounter__name' },
+                        React.createElement('i', { className: 'encounter__status' })
+                    )
                 )
             );
         }
@@ -74,6 +78,13 @@ var Combatant = (function (_React$Component2) {
     _createClass(Combatant, [{
         key: 'render',
         value: function render() {
+            var misses = parseInt(this.props.misses, 10) > 0 ? React.createElement(
+                'span',
+                { className: 'combatant__misses' },
+                'M:',
+                this.props.misses
+            ) : '';
+
             return React.createElement(
                 'li',
                 { className: 'combatant ' + classify(this.props.job) + ' ' + (this.props.isSelf ? 'self' : '') },
@@ -93,6 +104,7 @@ var Combatant = (function (_React$Component2) {
                     { className: 'combatant__damage' },
                     this.props.damage
                 ),
+                misses,
                 React.createElement('span', { className: 'combatant__bar', style: { width: this.props.damageOfTotal + '%' } })
             );
         }
@@ -133,6 +145,7 @@ var CombatantList = (function (_React$Component3) {
                         job: combatants[combatant].Job,
                         damage: combatants[combatant]['damage%'],
                         dps: combatants[combatant].dps,
+                        misses: combatants[combatant].misses,
                         damageOfTotal: combatants[combatant].damage / dmgLeader * 100,
                         isSelf: isSelf
                     }));
@@ -192,7 +205,7 @@ var Overlay = (function (_React$Component4) {
 
 document.addEventListener('onOverlayDataUpdate', function (e) {
 
-    //console.log(e.detail);
+    console.log(e.detail);
 
     React.render(React.createElement(Overlay, { parseData: e.detail }), document.getElementById('container'));
 });
