@@ -35,9 +35,20 @@ class Header extends React.Component {
 class Combatant extends React.Component {
     render() {
         var misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses">M:{this.props.misses}</span> : '';
+        var job;
+
+        if(this.props.job === '') {
+            job = 'unk';
+        }
+        else if(this.props.name === 'Limit Break') {
+            job = 'limit-break';
+        }
+        else {
+            job = this.props.job;
+        }
 
         return(
-            <li className={`combatant ${classify(this.props.job)} ${this.props.isSelf ? 'self' : ''}`}>
+            <li className={`combatant ${classify(job)} ${this.props.isSelf ? 'self' : ''}`}>
                 <i className="combatant__icon"></i>
                 <span className="combatant__name">{this.props.name}</span>
                 <span className="combatant__dps">{this.props.dps}</span>
@@ -120,7 +131,7 @@ class Overlay extends React.Component {
 
 document.addEventListener('onOverlayDataUpdate', function(e) {
 
-    console.log(e.detail);
+    //console.log(e.detail);
 
     React.render(
         <Overlay parseData={e.detail} />,

@@ -9,11 +9,10 @@ $jobs : (
         'drg': dps,
         'drk': tank,
         'eos': pet,
-        'error': unknown,
         'garuda': pet,
         'gld': tank,
         'ifrit': pet,
-        'limit': special,
+        'limit-break': special,
         'lnc': dps,
         'mch': dps,
         'mnk': dps,
@@ -29,7 +28,8 @@ $jobs : (
         'thm': dps,
         'titan': pet,
         'war': tank,
-        'whm': healer
+        'whm': healer,
+        'unk': unknown
 );
 
 $bodyFont : 'Titillium Web', sans-serif;

@@ -84,10 +84,19 @@ var Combatant = (function (_React$Component2) {
                 'M:',
                 this.props.misses
             ) : '';
+            var job;
+
+            if (this.props.job === '') {
+                job = 'unk';
+            } else if (this.props.name === 'Limit Break') {
+                job = 'limit-break';
+            } else {
+                job = this.props.job;
+            }
 
             return React.createElement(
                 'li',
-                { className: 'combatant ' + classify(this.props.job) + ' ' + (this.props.isSelf ? 'self' : '') },
+                { className: 'combatant ' + classify(job) + ' ' + (this.props.isSelf ? 'self' : '') },
                 React.createElement('i', { className: 'combatant__icon' }),
                 React.createElement(
                     'span',
@@ -205,7 +214,7 @@ var Overlay = (function (_React$Component4) {
 
 document.addEventListener('onOverlayDataUpdate', function (e) {
 
-    console.log(e.detail);
+    //console.log(e.detail);
 
     React.render(React.createElement(Overlay, { parseData: e.detail }), document.getElementById('container'));
 });

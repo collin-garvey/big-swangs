@@ -259,10 +259,10 @@ var ActXivBefore = {
             "IncToHit": "62.50",
             "OverHealPct": "0%"
         },
-        "Lexxi Foxx": {
+        "Limit Break": {
             "n": "\n",
             "t": "\t",
-            "name": "Lexxi Foxx",
+            "name": "Limit Break",
             "duration": "02:57",
             "DURATION": "177",
             "damage": "3260",
@@ -323,7 +323,7 @@ var ActXivBefore = {
             "Last10DPS": "1234",
             "Last30DPS": "0",
             "Last60DPS": "5",
-            "Job": "Nin",
+            "Job": "",
             "ParryPct": "0%",
             "BlockPct": "0%",
             "IncToHit": "62.50",
@@ -1852,10 +1852,10 @@ var ActXivAfter = {
             "IncToHit": "62.50",
             "OverHealPct": "0%"
         },
-        "Lexxi Foxx": {
+        "Limit Break": {
             "n": "\n",
             "t": "\t",
-            "name": "Lexxi Foxx",
+            "name": "Limit Break",
             "duration": "02:57",
             "DURATION": "177",
             "damage": "3260",
@@ -1916,7 +1916,7 @@ var ActXivAfter = {
             "Last10DPS": "1234",
             "Last30DPS": "0",
             "Last60DPS": "5",
-            "Job": "Nin",
+            "Job": "",
             "ParryPct": "0%",
             "BlockPct": "0%",
             "IncToHit": "62.50",
