@@ -180,6 +180,7 @@ li {
 .combatant__dps {
     display    : block;
     float      : right;
+    min-width  : 58px;
     background : rgba(0, 0, 0, 0.2);
     text-align : right;
     padding    : 0 8px;
