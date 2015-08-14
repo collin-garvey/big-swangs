@@ -164,7 +164,7 @@ li {
     padding-right   : 2px;
     margin-right    : 5px;
     background      : rgba(0, 0, 0, 0.2) center center no-repeat;
-    background-size : contain;
+    background-size : 18px;
 }
 
 .combatant__name {
@@ -180,7 +180,7 @@ li {
 .combatant__dps {
     display    : block;
     float      : right;
-    min-width  : 58px;
+    min-width  : 59px;
     background : rgba(0, 0, 0, 0.2);
     text-align : right;
     padding    : 0 8px;

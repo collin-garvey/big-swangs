@@ -100,9 +100,7 @@ var Combatant = (function (_React$Component2) {
                 React.createElement(
                     'span',
                     { className: 'combatant__name' },
-                    this.props.name,
-                    ' ',
-                    this.props.job
+                    this.props.name
                 ),
                 React.createElement(
                     'span',

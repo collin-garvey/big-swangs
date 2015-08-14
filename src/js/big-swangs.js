@@ -49,7 +49,7 @@ class Combatant extends React.Component {
         return(
             <li className={`combatant ${classify(job)} ${this.props.isSelf ? 'self' : ''}`}>
                 <i className="combatant__icon"></i>
-                <span className="combatant__name">{this.props.name} {this.props.job}</span>
+                <span className="combatant__name">{this.props.name}</span>
                 <span className="combatant__dps">{this.props.dps}</span>
                 <span className="combatant__damage">{this.props.damage}</span>
                 {misses}
