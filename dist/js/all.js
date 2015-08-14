@@ -85,11 +85,10 @@ var Combatant = (function (_React$Component2) {
                 this.props.misses
             ) : '';
             var job;
-
-            if (this.props.job === '') {
-                job = 'unk';
-            } else if (this.props.name === 'Limit Break') {
+            if (this.props.name === 'Limit Break') {
                 job = 'limit-break';
+            } else if (this.props.job === '') {
+                job = 'unk';
             } else {
                 job = this.props.job;
             }
@@ -101,7 +100,9 @@ var Combatant = (function (_React$Component2) {
                 React.createElement(
                     'span',
                     { className: 'combatant__name' },
-                    this.props.name
+                    this.props.name,
+                    ' ',
+                    this.props.job
                 ),
                 React.createElement(
                     'span',

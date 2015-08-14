@@ -36,12 +36,11 @@ class Combatant extends React.Component {
     render() {
         var misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses">M:{this.props.misses}</span> : '';
         var job;
-
-        if(this.props.job === '') {
-            job = 'unk';
-        }
-        else if(this.props.name === 'Limit Break') {
+        if(this.props.name === 'Limit Break') {
             job = 'limit-break';
+        }
+        else if(this.props.job === '') {
+            job = 'unk';
         }
         else {
             job = this.props.job;
@@ -50,7 +49,7 @@ class Combatant extends React.Component {
         return(
             <li className={`combatant ${classify(job)} ${this.props.isSelf ? 'self' : ''}`}>
                 <i className="combatant__icon"></i>
-                <span className="combatant__name">{this.props.name}</span>
+                <span className="combatant__name">{this.props.name} {this.props.job}</span>
                 <span className="combatant__dps">{this.props.dps}</span>
                 <span className="combatant__damage">{this.props.damage}</span>
                 {misses}
