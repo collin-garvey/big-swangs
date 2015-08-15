@@ -62,8 +62,7 @@ var Header = (function (_React$Component) {
                     React.createElement(
                         'span',
                         { className: 'encounter__name' },
-                        React.createElement('i', { className: 'encounter__status' }),
-                        React.createElement('i', { className: 'toggle__maxhits' })
+                        React.createElement('i', { className: 'encounter__status' })
                     )
                 )
             );
@@ -92,8 +91,11 @@ var Combatant = (function (_React$Component2) {
                 this.props.misses
             ) : '';
             var job;
+
             if (this.props.name === 'Limit Break') {
                 job = 'limit-break';
+            } else if (this.props.name.indexOf('(') >= 0) {
+                job = 'choco';
             } else if (this.props.job === '') {
                 job = 'unk';
             } else {
@@ -112,7 +114,6 @@ var Combatant = (function (_React$Component2) {
                 React.createElement(
                     'span',
                     { className: 'combatant__damage' },
-                    misses,
                     React.createElement(
                         'span',
                         { className: 'damage-percent' },
@@ -122,7 +123,8 @@ var Combatant = (function (_React$Component2) {
                         'span',
                         { className: 'damage-maxhit' },
                         this.props.maxhit
-                    )
+                    ),
+                    misses
                 ),
                 React.createElement(
                     'span',

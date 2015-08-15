@@ -30,7 +30,6 @@ class Header extends React.Component {
                 <div className="header__right">
                     <span className="encounter__name">
                         <i className="encounter__status"></i>
-                        <i className="toggle__maxhits"></i>
                     </span>
 
                 </div>
@@ -43,8 +42,12 @@ class Combatant extends React.Component {
     render() {
         var misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses">M:{this.props.misses}</span> : '';
         var job;
+
         if(this.props.name === 'Limit Break') {
             job = 'limit-break';
+        }
+        else if(this.props.name.indexOf('(') >= 0) {
+            job = 'choco';
         }
         else if(this.props.job === '') {
             job = 'unk';
@@ -58,9 +61,9 @@ class Combatant extends React.Component {
                 <i className="combatant__icon"></i>
                 <span className="combatant__name">{formatName(this.props.name)}</span>
                 <span className="combatant__damage">
-                    {misses}
                     <span className="damage-percent">{this.props.damage}</span>
                     <span className="damage-maxhit">{this.props.maxhit}</span>
+                    {misses}
                 </span>
 
                 <span className="combatant__dps">{this.props.dps}</span>
