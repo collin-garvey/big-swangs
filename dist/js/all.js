@@ -20,6 +20,10 @@ function formatName(name) {
     return name === 'YOU' ? name : pieces[0] + ' ' + pieces[1].substr(0, 1).toUpperCase() + '.';
 }
 
+function formatMaxHit(hitText) {
+    var pieces = hitText.split('-');
+}
+
 var Header = (function (_React$Component) {
     _inherits(Header, _React$Component);
 
@@ -181,7 +185,7 @@ var CombatantList = (function (_React$Component3) {
 
             return React.createElement(
                 'ul',
-                null,
+                { className: '' + (this.props.isActive ? 'active' : 'inactive') },
                 combatantsArray
             );
         }
@@ -206,6 +210,12 @@ var Overlay = (function (_React$Component4) {
             return nextProps.parseData.Encounter.encdps !== '---';
         }
     }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var doc = document.documentElement;
+            doc.classList.add('resizable');
+        }
+    }, {
         key: 'render',
         value: function render() {
             var combatant = this.props.parseData.Combatant;
@@ -221,7 +231,8 @@ var Overlay = (function (_React$Component4) {
                 }),
                 React.createElement(CombatantList, {
                     combatants: combatant,
-                    encounterDamage: encounter.damage
+                    encounterDamage: encounter.damage,
+                    isActive: this.props.parseData.isActive
                 })
             );
         }

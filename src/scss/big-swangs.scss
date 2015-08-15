@@ -22,6 +22,18 @@ $unknownColor : #2c3e50;
     text-shadow : -1px 0 3px $baseColor, 0 1px 3px $baseColor, 1px 0 3px $baseColor, 0 -1px 3px $baseColor;
 }
 
+@-webkit-keyframes pulsate {
+    0% {
+        background-color : #ff0000;
+    }
+    50% {
+        background-color : maroon;
+    }
+    100% {
+        background-color : #ff0000;
+    }
+}
+
 * {
     margin     : 0;
     padding    : 0;
@@ -30,20 +42,28 @@ $unknownColor : #2c3e50;
 
 html {
     height      : 100%;
-    overflow    : hidden;
+    padding     : 0 0 0 3px;
     font-family : $bodyFont;
+    min-width   : 300px;
 }
 
 li {
     list-style : none;
 }
 
+.resizable {
+    background-image    : url(../images/interface/handle.png);
+    background-position : bottom right;
+    background-repeat   : no-repeat;
+}
+
 .container {
     background : rgba(0, 0, 0, 0.20);
     box-shadow : 0 0 10px rgba(0, 0, 0, 0.20);
+    //padding    : 0 0 0 3px;
     //min-width  : 300px;
     //max-width  : 350px;
-    overflow   : hidden;
+    //overflow   : hidden;
 }
 
 .overlay {
@@ -63,7 +83,7 @@ li {
 .header {
     @include clearfix;
     @include glow-text;
-    padding     : 5px 8px;
+    padding : 5px 8px;
 }
 
 .header__left {
@@ -105,6 +125,17 @@ li {
 }
 
 .active {
+    //.combatant.self::before {
+    //    display                           : block;
+    //    content                           : "";
+    //    position                          : absolute;
+    //    top                               : 0;
+    //    left                              : -3px;
+    //    width                             : 3px;
+    //    height                            : 20px;
+    //    -webkit-animation                 : pulsate 1s ease-out;
+    //    -webkit-animation-iteration-count : infinite;
+    //}
     .encounter__status {
         background-image : url(../images/interface/battle_info.png);
     }
@@ -186,7 +217,7 @@ li {
 }
 
 .combatant__misses {
-    @include glow-text(#e74c3c);
+    @include glow-text(yellow);
     display       : inline-block;
     border-radius : 2px;
     height        : 14px;
@@ -210,12 +241,12 @@ $rolesToRoleColor : (
 
 @each $job, $role in $jobs {
     .#{$job} {
-        $roleColor: map-get($rolesToRoleColor, $role);
+        $roleColor : map-get($rolesToRoleColor, $role);
 
-        background-color: transparentize($roleColor, $rowTransparency);
+        background-color : transparentize($roleColor, $rowTransparency);
 
         .combatant__bar {
-            background-color: $roleColor;
+            background-color : $roleColor;
         }
 
         .combatant__icon {

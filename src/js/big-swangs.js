@@ -10,6 +10,10 @@ function formatName(name) {
     return (name === 'YOU') ? name : pieces[0] + ' ' + pieces[1].substr(0, 1).toUpperCase() + '.';
 }
 
+function formatMaxHit(hitText) {
+    let pieces = hitText.split('-');
+}
+
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -106,7 +110,7 @@ class CombatantList extends React.Component {
         }
 
         return (
-            <ul>
+            <ul className={`${this.props.isActive ? 'active': 'inactive'}`}>
                 {combatantsArray}
             </ul>
         );
@@ -123,6 +127,11 @@ class Overlay extends React.Component {
         return nextProps.parseData.Encounter.encdps !== '---';
     }
 
+    componentWillMount() {
+        var doc = document.documentElement;
+        doc.classList.add('resizable');
+    }
+
     render() {
         var combatant = this.props.parseData.Combatant;
         var encounter = this.props.parseData.Encounter;
@@ -137,6 +146,7 @@ class Overlay extends React.Component {
                 <CombatantList
                     combatants={combatant}
                     encounterDamage={encounter.damage}
+                    isActive={this.props.parseData.isActive}
                     />
             </div>
         );
