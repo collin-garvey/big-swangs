@@ -14,6 +14,12 @@ function classify(job) {
     }
 }
 
+function formatName(name) {
+    var pieces = name.split(' ');
+
+    return name === 'YOU' ? name : pieces[0] + ' ' + pieces[1].substr(0, 1).toUpperCase() + '.';
+}
+
 var Header = (function (_React$Component) {
     _inherits(Header, _React$Component);
 
@@ -56,7 +62,8 @@ var Header = (function (_React$Component) {
                     React.createElement(
                         'span',
                         { className: 'encounter__name' },
-                        React.createElement('i', { className: 'encounter__status' })
+                        React.createElement('i', { className: 'encounter__status' }),
+                        React.createElement('i', { className: 'toggle__maxhits' })
                     )
                 )
             );
@@ -100,19 +107,28 @@ var Combatant = (function (_React$Component2) {
                 React.createElement(
                     'span',
                     { className: 'combatant__name' },
-                    this.props.name
+                    formatName(this.props.name)
+                ),
+                React.createElement(
+                    'span',
+                    { className: 'combatant__damage' },
+                    misses,
+                    React.createElement(
+                        'span',
+                        { className: 'damage-percent' },
+                        this.props.damage
+                    ),
+                    React.createElement(
+                        'span',
+                        { className: 'damage-maxhit' },
+                        this.props.maxhit
+                    )
                 ),
                 React.createElement(
                     'span',
                     { className: 'combatant__dps' },
                     this.props.dps
                 ),
-                React.createElement(
-                    'span',
-                    { className: 'combatant__damage' },
-                    this.props.damage
-                ),
-                misses,
                 React.createElement('span', { className: 'combatant__bar', style: { width: this.props.damageOfTotal + '%' } })
             );
         }
@@ -153,6 +169,7 @@ var CombatantList = (function (_React$Component3) {
                         job: combatants[combatant].Job,
                         damage: combatants[combatant]['damage%'],
                         dps: combatants[combatant].dps,
+                        maxhit: combatants[combatant].maxhit,
                         misses: combatants[combatant].misses,
                         damageOfTotal: combatants[combatant].damage / dmgLeader * 100,
                         isSelf: isSelf

@@ -4,6 +4,12 @@ function classify(job) {
     }
 }
 
+function formatName(name) {
+    let pieces = name.split(' ');
+
+    return (name === 'YOU') ? name : pieces[0] + ' ' + pieces[1].substr(0, 1).toUpperCase() + '.';
+}
+
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +30,7 @@ class Header extends React.Component {
                 <div className="header__right">
                     <span className="encounter__name">
                         <i className="encounter__status"></i>
+                        <i className="toggle__maxhits"></i>
                     </span>
 
                 </div>
@@ -49,10 +56,14 @@ class Combatant extends React.Component {
         return(
             <li className={`combatant ${classify(job)} ${this.props.isSelf ? 'self' : ''}`}>
                 <i className="combatant__icon"></i>
-                <span className="combatant__name">{this.props.name}</span>
+                <span className="combatant__name">{formatName(this.props.name)}</span>
+                <span className="combatant__damage">
+                    {misses}
+                    <span className="damage-percent">{this.props.damage}</span>
+                    <span className="damage-maxhit">{this.props.maxhit}</span>
+                </span>
+
                 <span className="combatant__dps">{this.props.dps}</span>
-                <span className="combatant__damage">{this.props.damage}</span>
-                {misses}
                 <span className="combatant__bar" style={{width: this.props.damageOfTotal + '%'}}></span>
             </li>
         );
@@ -82,6 +93,7 @@ class CombatantList extends React.Component {
                         job={combatants[combatant].Job}
                         damage={combatants[combatant]['damage%']}
                         dps={combatants[combatant].dps}
+                        maxhit={combatants[combatant].maxhit}
                         misses={combatants[combatant].misses}
                         damageOfTotal={(combatants[combatant].damage / dmgLeader) * 100}
                         isSelf={isSelf}

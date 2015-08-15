@@ -72,8 +72,8 @@ li {
 .container {
     background : rgba(0, 0, 0, 0.20);
     box-shadow : 0 0 10px rgba(0, 0, 0, 0.20);
-    min-width  : 300px;
-    max-width  : 350px;
+    //min-width  : 300px;
+    //max-width  : 350px;
     overflow   : hidden;
 }
 
@@ -126,6 +126,16 @@ li {
     transition      : all 0.3s ease;
 }
 
+.toggle__maxhits {
+    display         : block;
+    float           : right;
+    width           : 18px;
+    height          : 18px;
+    background      : red center center no-repeat;
+    background-size : contain;
+    transition      : all 0.3s ease;
+}
+
 .active {
     .encounter__status {
         background-image : url(../images/interface/active.png);
@@ -140,10 +150,12 @@ li {
 
 .combatant {
     @include clearfix;
-    position      : relative;
-    height        : 20px;
-    margin-bottom : 1px;
-    line-height   : 20px;
+    display         : flex;
+    position        : relative;
+    justify-content : space-around;
+    height          : 20px;
+    margin-bottom   : 1px;
+    line-height     : 20px;
 }
 
 .combatant__bar {
@@ -158,8 +170,8 @@ li {
 
 .combatant__icon {
     display         : block;
-    float           : left;
     width           : 24px;
+    min-width       : 24px;
     height          : 20px;
     padding-right   : 2px;
     margin-right    : 5px;
@@ -169,7 +181,7 @@ li {
 
 .combatant__name {
     display       : block;
-    float         : left;
+    flex-grow     : 1;
     max-width     : 60%;
     text-overflow : ellipsis;
     white-space   : nowrap;
@@ -177,9 +189,17 @@ li {
     z-index       : 1;
 }
 
+.combatant__damage {
+    position   : relative;
+    flex-grow  : 1;
+    text-align : right;
+    padding    : 0 8px 0 0;
+}
+
 .combatant__dps {
     display    : block;
-    float      : right;
+    position   : relative;
+    left       : 1px;
     min-width  : 59px;
     background : rgba(0, 0, 0, 0.2);
     text-align : right;
@@ -188,17 +208,20 @@ li {
     z-index    : 1;
 }
 
-.combatant__damage {
-    float        : right;
-    margin-right : 8px;
-    text-align   : right;
+.damage-percent {
+    position : relative;
+    top      : 0;
+}
+
+.damage-maxhit {
+    display  : none;
+    position : absolute;
+    top      : 20px;
 }
 
 .combatant__misses {
-    display : block;
-    float   : right;
-    color   : yellow;
-    margin  : 0 8px 0 0;
+    color  : yellow;
+    margin : 0 8px 0 0;
 }
 
 @each $job, $role in $jobs {
