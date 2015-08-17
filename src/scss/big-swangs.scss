@@ -207,24 +207,29 @@ li {
     z-index    : 1;
 }
 
+.damage-crit {
+    min-width : 32px;
+}
+
 .damage-percent {
-    display  : none;
-    position : relative;
-    top      : 0;
+    min-width : 32px;
 }
 
-.damage-maxhit {
-}
+.damage-maxhit {}
 
-.combatant__misses {
-    @include glow-text(yellow);
+.tag {
     display       : inline-block;
     border-radius : 2px;
     height        : 14px;
     line-height   : 14px;
-    padding       : 0 4px;
-    background    : rgba(0, 0, 0, 0.7);
+    //padding       : 0 4px;
+    //background    : rgba(0, 0, 0, 0.5);
     margin        : 0 0 0 8px;
+}
+
+.combatant__misses {
+    @include glow-text(red);
+    display : inline-block;
 }
 
 $rowTransparency : 0.65;

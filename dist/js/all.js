@@ -17,11 +17,13 @@ function classify(job) {
 function formatName(name) {
     var pieces = name.split(' ');
 
-    return name === 'YOU' ? name : pieces[0] + ' ' + pieces[1].substr(0, 1).toUpperCase() + '.';
+    return name === 'YOU' ? name : pieces[0].substr(0, 1).toUpperCase() + '. ' + pieces[1].substr(0, 1).toUpperCase() + '.';
 }
 
 function formatMaxHit(hitText) {
     var pieces = hitText.split('-');
+
+    return pieces[0] + ' ' + pieces[1];
 }
 
 var Header = (function (_React$Component) {
@@ -90,7 +92,7 @@ var Combatant = (function (_React$Component2) {
         value: function render() {
             var misses = parseInt(this.props.misses, 10) > 0 ? React.createElement(
                 'span',
-                { className: 'combatant__misses' },
+                { className: 'combatant__misses tag' },
                 'M:',
                 this.props.misses
             ) : '';
@@ -120,15 +122,15 @@ var Combatant = (function (_React$Component2) {
                     { className: 'combatant__damage' },
                     React.createElement(
                         'span',
-                        { className: 'damage-percent' },
-                        this.props.damage
+                        { className: 'damage-maxhit tag' },
+                        formatMaxHit(this.props.maxhit)
                     ),
+                    misses,
                     React.createElement(
                         'span',
-                        { className: 'damage-maxhit' },
-                        this.props.maxhit
-                    ),
-                    misses
+                        { className: 'damage-percent tag' },
+                        this.props.damage
+                    )
                 ),
                 React.createElement(
                     'span',
@@ -176,6 +178,7 @@ var CombatantList = (function (_React$Component3) {
                         damage: combatants[combatant]['damage%'],
                         dps: combatants[combatant].dps,
                         maxhit: combatants[combatant].maxhit,
+                        crit: combatants[combatant]['crithit%'],
                         misses: combatants[combatant].misses,
                         damageOfTotal: combatants[combatant].damage / dmgLeader * 100,
                         isSelf: isSelf
@@ -247,4 +250,5 @@ document.addEventListener('onOverlayDataUpdate', function (e) {
 
     React.render(React.createElement(Overlay, { parseData: e.detail }), document.getElementById('container'));
 });
+/*<span className="damage-crit tag">{this.props.crit}</span>*/
 //# sourceMappingURL=all.js.map

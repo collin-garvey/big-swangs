@@ -7,11 +7,13 @@ function classify(job) {
 function formatName(name) {
     let pieces = name.split(' ');
 
-    return (name === 'YOU') ? name : pieces[0] + ' ' + pieces[1].substr(0, 1).toUpperCase() + '.';
+    return (name === 'YOU') ? name : pieces[0].substr(0, 1).toUpperCase() + '. ' + pieces[1].substr(0, 1).toUpperCase() + '.';
 }
 
 function formatMaxHit(hitText) {
     let pieces = hitText.split('-');
+
+    return pieces[0] + ' ' + pieces[1];
 }
 
 class Header extends React.Component {
@@ -44,7 +46,7 @@ class Header extends React.Component {
 
 class Combatant extends React.Component {
     render() {
-        var misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses">M:{this.props.misses}</span> : '';
+        var misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses tag">M:{this.props.misses}</span> : '';
         var job;
 
         if(this.props.name === 'Limit Break') {
@@ -65,9 +67,10 @@ class Combatant extends React.Component {
                 <i className="combatant__icon"></i>
                 <span className="combatant__name">{formatName(this.props.name)}</span>
                 <span className="combatant__damage">
-                    <span className="damage-percent">{this.props.damage}</span>
-                    <span className="damage-maxhit">{this.props.maxhit}</span>
+                    <span className="damage-maxhit tag">{formatMaxHit(this.props.maxhit)}</span>
                     {misses}
+                    <span className="damage-percent tag">{this.props.damage}</span>
+                    {/*<span className="damage-crit tag">{this.props.crit}</span>*/}
                 </span>
 
                 <span className="combatant__dps">{this.props.dps}</span>
@@ -101,6 +104,7 @@ class CombatantList extends React.Component {
                         damage={combatants[combatant]['damage%']}
                         dps={combatants[combatant].dps}
                         maxhit={combatants[combatant].maxhit}
+                        crit={combatants[combatant]['crithit%']}
                         misses={combatants[combatant].misses}
                         damageOfTotal={(combatants[combatant].damage / dmgLeader) * 100}
                         isSelf={isSelf}
