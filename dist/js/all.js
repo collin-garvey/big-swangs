@@ -15,7 +15,9 @@ function classify(job) {
 }
 
 function formatNumber(num) {
-    return Number(num).toLocaleString('en');
+    var number = parseFloat(num);
+
+    return typeof number != 'number' ? '----' : Number(Math.round(parseFloat(number))).toLocaleString('en');
 }
 
 function formatName(name) {

@@ -206,7 +206,7 @@ li {
     display    : block;
     position   : relative;
     left       : 1px;
-    min-width  : 68px;
+    min-width  : 58px;
     background : rgba(0, 0, 0, 0.2);
     text-align : right;
     padding    : 0 8px;
@@ -261,7 +261,8 @@ $rolesToRoleColor : (
         background-color : transparentize($roleColor, $rowTransparency);
 
         .combatant__bar {
-            background-color : $roleColor;
+            background: linear-gradient(155deg, $roleColor 0%, darken($roleColor, 20%) 100%);
+            //background-color : $roleColor;
         }
 
         .combatant__icon {
