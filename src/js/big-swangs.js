@@ -33,15 +33,15 @@ class Header extends React.Component {
         return (
             <header className={`header ${this.props.isActive ? 'active': 'inactive'}`}>
                 <div className="header__left">
-                    <span className="encounter__time">Time: {this.props.duration}</span>
-                    <span className="encounter__raid-dps">Raid: <em>{this.props.encdps}</em></span>
+                    <span className="encounter__time"><i className="encounter__status"></i> {this.props.duration}</span>
+
                 </div>
 
                 <div className="header__right">
                     <span className="encounter__name">
-                        <i className="encounter__status"></i>
-                    </span>
 
+                    </span>
+                    <span className="encounter__raid-dps"><em>{formatNumber(this.props.encdps)}</em></span>
                 </div>
             </header>
         );

@@ -56,27 +56,23 @@ var Header = (function (_React$Component) {
                     React.createElement(
                         'span',
                         { className: 'encounter__time' },
-                        'Time: ',
+                        React.createElement('i', { className: 'encounter__status' }),
+                        ' ',
                         this.props.duration
-                    ),
-                    React.createElement(
-                        'span',
-                        { className: 'encounter__raid-dps' },
-                        'Raid: ',
-                        React.createElement(
-                            'em',
-                            null,
-                            this.props.encdps
-                        )
                     )
                 ),
                 React.createElement(
                     'div',
                     { className: 'header__right' },
+                    React.createElement('span', { className: 'encounter__name' }),
                     React.createElement(
                         'span',
-                        { className: 'encounter__name' },
-                        React.createElement('i', { className: 'encounter__status' })
+                        { className: 'encounter__raid-dps' },
+                        React.createElement(
+                            'em',
+                            null,
+                            formatNumber(this.props.encdps)
+                        )
                     )
                 )
             );

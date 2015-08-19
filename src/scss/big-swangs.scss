@@ -79,7 +79,7 @@ li {
 .header {
     @include clearfix;
     @include glow-text;
-    padding : 5px 8px;
+    padding : 5px 8px 5px 3px;
 }
 
 .header__left {
@@ -97,7 +97,8 @@ li {
 }
 
 .encounter__raid-dps {
-    display : block;
+    display    : block;
+    text-align : right;
 
     > em {
         @include glow-text(green);
@@ -107,12 +108,13 @@ li {
 
 .encounter__status {
     display         : block;
-    float           : right;
+    float           : left;
     width           : 20px;
     height          : 20px;
     background      : transparent center center no-repeat;
     background-size : contain;
     transition      : all 0.3s ease;
+    margin          : 0 7px 0 0;
 }
 
 .toggle__maxhits {
@@ -148,7 +150,7 @@ li {
 
     &.limit-break {
         //border-top : 1px solid transparentize($specialColor, 0.2);
-        margin     : 10px 0 0;
+        margin : 10px 0 0;
 
         .combatant__name {
             text-transform : uppercase;
@@ -173,8 +175,8 @@ li {
 
 .combatant__icon {
     display         : block;
-    width           : 24px;
-    min-width       : 24px;
+    width           : 26px;
+    min-width       : 26px;
     height          : 20px;
     padding-right   : 2px;
     margin-right    : 5px;
