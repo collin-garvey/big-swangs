@@ -60,10 +60,6 @@ li {
 .container {
     background : rgba(0, 0, 0, 0.20);
     box-shadow : 0 0 10px rgba(0, 0, 0, 0.20);
-    //padding    : 0 0 0 3px;
-    //min-width  : 300px;
-    //max-width  : 350px;
-    //overflow   : hidden;
 }
 
 .overlay {
@@ -102,6 +98,11 @@ li {
 
 .encounter__raid-dps {
     display : block;
+
+    > em {
+        @include glow-text(green);
+        font-style : normal;
+    }
 }
 
 .encounter__status {
@@ -125,17 +126,6 @@ li {
 }
 
 .active {
-    //.combatant.self::before {
-    //    display                           : block;
-    //    content                           : "";
-    //    position                          : absolute;
-    //    top                               : 0;
-    //    left                              : -3px;
-    //    width                             : 3px;
-    //    height                            : 20px;
-    //    -webkit-animation                 : pulsate 1s ease-out;
-    //    -webkit-animation-iteration-count : infinite;
-    //}
     .encounter__status {
         background-image : url(../images/interface/battle_info.png);
     }
@@ -155,6 +145,20 @@ li {
     height          : 20px;
     margin-bottom   : 1px;
     line-height     : 20px;
+
+    &.limit-break {
+        //border-top : 1px solid transparentize($specialColor, 0.2);
+        margin     : 10px 0 0;
+
+        .combatant__name {
+            text-transform : uppercase;
+            font-size      : 12px;
+        }
+    }
+
+    &.last-child {
+        margin-bottom : 0;
+    }
 }
 
 .combatant__bar {
@@ -193,37 +197,41 @@ li {
     flex-grow  : 1;
     text-align : right;
     padding    : 0 8px 0 0;
+    overflow   : hidden;
 }
 
 .combatant__dps {
     display    : block;
     position   : relative;
     left       : 1px;
-    min-width  : 59px;
+    min-width  : 68px;
     background : rgba(0, 0, 0, 0.2);
     text-align : right;
     padding    : 0 8px;
-    font-style : italic;
     z-index    : 1;
 }
 
-.damage-crit {
+.damage-percent,
+.damage-crit,
+.damage {
     min-width : 32px;
 }
 
-.damage-percent {
-    min-width : 32px;
+.damage {
+    opacity : 0.8;
 }
 
-.damage-maxhit {}
+.damage-maxhit {
+    position : absolute;
+    top      : -20px;
+    right    : 0;
+}
 
 .tag {
     display       : inline-block;
     border-radius : 2px;
     height        : 14px;
     line-height   : 14px;
-    //padding       : 0 4px;
-    //background    : rgba(0, 0, 0, 0.5);
     margin        : 0 0 0 8px;
 }
 

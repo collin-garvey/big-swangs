@@ -14,6 +14,10 @@ function classify(job) {
     }
 }
 
+function formatNumber(num) {
+    return Number(num).toLocaleString('en');
+}
+
 function formatName(name) {
     var pieces = name.split(' ');
 
@@ -59,7 +63,11 @@ var Header = (function (_React$Component) {
                         'span',
                         { className: 'encounter__raid-dps' },
                         'Raid: ',
-                        this.props.encdps
+                        React.createElement(
+                            'em',
+                            null,
+                            this.props.encdps
+                        )
                     )
                 ),
                 React.createElement(
@@ -96,7 +104,7 @@ var Combatant = (function (_React$Component2) {
                 'M:',
                 this.props.misses
             ) : '';
-            var job;
+            var job = undefined;
 
             if (this.props.name === 'Limit Break') {
                 job = 'limit-break';
@@ -128,14 +136,19 @@ var Combatant = (function (_React$Component2) {
                     misses,
                     React.createElement(
                         'span',
+                        { className: 'damage tag' },
+                        formatNumber(this.props.damage)
+                    ),
+                    React.createElement(
+                        'span',
                         { className: 'damage-percent tag' },
-                        this.props.damage
+                        this.props.damagePercent
                     )
                 ),
                 React.createElement(
                     'span',
                     { className: 'combatant__dps' },
-                    this.props.dps
+                    formatNumber(this.props.dps)
                 ),
                 React.createElement('span', { className: 'combatant__bar', style: { width: this.props.damageOfTotal + '%' } })
             );
@@ -145,8 +158,51 @@ var Combatant = (function (_React$Component2) {
     return Combatant;
 })(React.Component);
 
-var CombatantList = (function (_React$Component3) {
-    _inherits(CombatantList, _React$Component3);
+var LimitBreak = (function (_React$Component3) {
+    _inherits(LimitBreak, _React$Component3);
+
+    function LimitBreak() {
+        _classCallCheck(this, LimitBreak);
+
+        _get(Object.getPrototypeOf(LimitBreak.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(LimitBreak, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'combatant limit-break' },
+                React.createElement('i', { className: 'combatant__icon' }),
+                React.createElement(
+                    'span',
+                    { className: 'combatant__name' },
+                    this.props.name
+                ),
+                React.createElement(
+                    'span',
+                    { className: 'combatant__damage' },
+                    React.createElement(
+                        'span',
+                        { className: 'damage tag' },
+                        formatNumber(this.props.damage)
+                    ),
+                    React.createElement(
+                        'span',
+                        { className: 'damage-percent tag' },
+                        this.props.damagePercent
+                    )
+                ),
+                React.createElement('span', { className: 'combatant__bar', style: { width: this.props.damageOfTotal + '%' } })
+            );
+        }
+    }]);
+
+    return LimitBreak;
+})(React.Component);
+
+var CombatantList = (function (_React$Component4) {
+    _inherits(CombatantList, _React$Component4);
 
     function CombatantList() {
         _classCallCheck(this, CombatantList);
@@ -160,6 +216,7 @@ var CombatantList = (function (_React$Component3) {
             var combatantsArray = [];
             var combatants = this.props.combatants;
             var dmgLeader = 0;
+            var limitBreak = undefined;
 
             for (var c in combatants) {
                 if (combatants.hasOwnProperty(c)) {
@@ -171,25 +228,37 @@ var CombatantList = (function (_React$Component3) {
                 if (combatants.hasOwnProperty(combatant)) {
                     var isSelf = combatants[combatant].name === 'YOU';
 
-                    combatantsArray.push(React.createElement(Combatant, {
-                        key: combatant,
-                        name: combatants[combatant].name,
-                        job: combatants[combatant].Job,
-                        damage: combatants[combatant]['damage%'],
-                        dps: combatants[combatant].dps,
-                        maxhit: combatants[combatant].maxhit,
-                        crit: combatants[combatant]['crithit%'],
-                        misses: combatants[combatant].misses,
-                        damageOfTotal: combatants[combatant].damage / dmgLeader * 100,
-                        isSelf: isSelf
-                    }));
+                    if (combatants[combatant].name !== 'Limit Break') {
+                        combatantsArray.push(React.createElement(Combatant, {
+                            key: combatant,
+                            name: combatants[combatant].name,
+                            job: combatants[combatant].Job,
+                            damagePercent: combatants[combatant]['damage%'],
+                            dps: combatants[combatant].dps,
+                            maxhit: combatants[combatant].maxhit,
+                            damage: combatants[combatant].damage,
+                            misses: combatants[combatant].misses,
+                            damageOfTotal: combatants[combatant].damage / dmgLeader * 100,
+                            isSelf: isSelf
+                        }));
+                    } else {
+                        limitBreak = React.createElement(LimitBreak, {
+                            key: combatant,
+                            name: combatants[combatant].name,
+                            job: combatants[combatant].Job,
+                            damagePercent: combatants[combatant]['damage%'],
+                            damage: combatants[combatant].damage,
+                            damageOfTotal: combatants[combatant].damage / dmgLeader * 100
+                        });
+                    }
                 }
             }
 
             return React.createElement(
                 'ul',
                 { className: '' + (this.props.isActive ? 'active' : 'inactive') },
-                combatantsArray
+                combatantsArray,
+                limitBreak
             );
         }
     }]);
@@ -197,8 +266,8 @@ var CombatantList = (function (_React$Component3) {
     return CombatantList;
 })(React.Component);
 
-var Overlay = (function (_React$Component4) {
-    _inherits(Overlay, _React$Component4);
+var Overlay = (function (_React$Component5) {
+    _inherits(Overlay, _React$Component5);
 
     function Overlay(props) {
         _classCallCheck(this, Overlay);
@@ -250,5 +319,4 @@ document.addEventListener('onOverlayDataUpdate', function (e) {
 
     React.render(React.createElement(Overlay, { parseData: e.detail }), document.getElementById('container'));
 });
-/*<span className="damage-crit tag">{this.props.crit}</span>*/
 //# sourceMappingURL=all.js.map

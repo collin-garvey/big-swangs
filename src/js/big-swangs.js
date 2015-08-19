@@ -4,6 +4,10 @@ function classify(job) {
     }
 }
 
+function formatNumber(num) {
+    return Number(num).toLocaleString('en');
+}
+
 function formatName(name) {
     let pieces = name.split(' ');
 
@@ -30,7 +34,7 @@ class Header extends React.Component {
             <header className={`header ${this.props.isActive ? 'active': 'inactive'}`}>
                 <div className="header__left">
                     <span className="encounter__time">Time: {this.props.duration}</span>
-                    <span className="encounter__raid-dps">Raid: {this.props.encdps}</span>
+                    <span className="encounter__raid-dps">Raid: <em>{this.props.encdps}</em></span>
                 </div>
 
                 <div className="header__right">
@@ -46,8 +50,8 @@ class Header extends React.Component {
 
 class Combatant extends React.Component {
     render() {
-        var misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses tag">M:{this.props.misses}</span> : '';
-        var job;
+        let misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses tag">M:{this.props.misses}</span> : '';
+        let job;
 
         if(this.props.name === 'Limit Break') {
             job = 'limit-break';
@@ -66,56 +70,88 @@ class Combatant extends React.Component {
             <li className={`combatant ${classify(job)} ${this.props.isSelf ? 'self' : ''}`}>
                 <i className="combatant__icon"></i>
                 <span className="combatant__name">{formatName(this.props.name)}</span>
+
                 <span className="combatant__damage">
                     <span className="damage-maxhit tag">{formatMaxHit(this.props.maxhit)}</span>
                     {misses}
-                    <span className="damage-percent tag">{this.props.damage}</span>
-                    {/*<span className="damage-crit tag">{this.props.crit}</span>*/}
+                    <span className="damage tag">{formatNumber(this.props.damage)}</span>
+                    <span className="damage-percent tag">{this.props.damagePercent}</span>
                 </span>
 
-                <span className="combatant__dps">{this.props.dps}</span>
+                <span className="combatant__dps">{formatNumber(this.props.dps)}</span>
                 <span className="combatant__bar" style={{width: this.props.damageOfTotal + '%'}}></span>
             </li>
         );
     }
 }
 
+class LimitBreak extends React.Component {
+    render() {
+        return (
+            <div className="combatant limit-break">
+                <i className="combatant__icon"></i>
+                <span className="combatant__name">{this.props.name}</span>
+                <span className="combatant__damage">
+                    <span className="damage tag">{formatNumber(this.props.damage)}</span>
+                    <span className="damage-percent tag">{this.props.damagePercent}</span>
+                </span>
+                <span className="combatant__bar" style={{width: this.props.damageOfTotal + '%'}}></span>
+            </div>
+        );
+    }
+}
+
 class CombatantList extends React.Component {
     render() {
-        var combatantsArray = [];
-        var combatants = this.props.combatants;
-        var dmgLeader = 0;
+        let combatantsArray = [];
+        let combatants = this.props.combatants;
+        let dmgLeader = 0;
+        let limitBreak;
 
-        for(var c in combatants) {
+        for(let c in combatants) {
             if (combatants.hasOwnProperty(c)) {
                 dmgLeader = Math.max(combatants[c].damage, dmgLeader);
             }
         }
 
+
         for(var combatant in combatants) {
             if(combatants.hasOwnProperty(combatant)) {
                 var isSelf = (combatants[combatant].name === 'YOU');
 
-                combatantsArray.push(
-                    <Combatant
-                        key={combatant}
-                        name={combatants[combatant].name}
-                        job={combatants[combatant].Job}
-                        damage={combatants[combatant]['damage%']}
-                        dps={combatants[combatant].dps}
-                        maxhit={combatants[combatant].maxhit}
-                        crit={combatants[combatant]['crithit%']}
-                        misses={combatants[combatant].misses}
-                        damageOfTotal={(combatants[combatant].damage / dmgLeader) * 100}
-                        isSelf={isSelf}
-                        />
-                );
+                if(combatants[combatant].name !== 'Limit Break') {
+                    combatantsArray.push(
+                        <Combatant
+                            key={combatant}
+                            name={combatants[combatant].name}
+                            job={combatants[combatant].Job}
+                            damagePercent={combatants[combatant]['damage%']}
+                            dps={combatants[combatant].dps}
+                            maxhit={combatants[combatant].maxhit}
+                            damage={combatants[combatant].damage}
+                            misses={combatants[combatant].misses}
+                            damageOfTotal={(combatants[combatant].damage / dmgLeader) * 100}
+                            isSelf={isSelf}
+                            />
+                    );
+                }
+                else {
+                    limitBreak = <LimitBreak
+                                    key={combatant}
+                                    name={combatants[combatant].name}
+                                    job={combatants[combatant].Job}
+                                    damagePercent={combatants[combatant]['damage%']}
+                                    damage={combatants[combatant].damage}
+                                    damageOfTotal={(combatants[combatant].damage / dmgLeader) * 100}
+                                    />
+                }
             }
         }
 
         return (
             <ul className={`${this.props.isActive ? 'active': 'inactive'}`}>
                 {combatantsArray}
+                {limitBreak}
             </ul>
         );
     }
