@@ -58,8 +58,9 @@ li {
 }
 
 .container {
-    background : rgba(0, 0, 0, 0.20);
-    box-shadow : 0 0 10px rgba(0, 0, 0, 0.20);
+    background : rgba(0, 0, 0, 0.7);
+    //box-shadow : 0 0 10px rgba(0, 0, 0, 0.7);
+    //margin : 10px;
 }
 
 .overlay {
@@ -145,7 +146,7 @@ li {
     position        : relative;
     justify-content : space-around;
     height          : 20px;
-    margin-bottom   : 1px;
+    //margin-bottom   : 1px;
     line-height     : 20px;
 
     &.limit-break {
@@ -169,7 +170,7 @@ li {
     top        : 0;
     left       : 0;
     height     : 20px;
-    z-index    : -1;
+    //z-index    : -1;
     transition : all .35s ease;
 }
 
@@ -182,6 +183,7 @@ li {
     margin-right    : 5px;
     background      : rgba(0, 0, 0, 0.2) center center no-repeat;
     background-size : 18px;
+    z-indeX         : 1;
 }
 
 .combatant__name {
@@ -261,7 +263,7 @@ $rolesToRoleColor : (
         background-color : transparentize($roleColor, $rowTransparency);
 
         .combatant__bar {
-            background: linear-gradient(155deg, $roleColor 0%, darken($roleColor, 20%) 100%);
+            background: linear-gradient(180deg, $roleColor 0%, darken($roleColor, 5%) 100%);
             //background-color : $roleColor;
         }
 

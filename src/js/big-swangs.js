@@ -6,7 +6,7 @@ function classify(job) {
 
 function formatNumber(num) {
     let number = parseFloat(num);
-    
+
     return (typeof number != 'number') ? '----' : Number(Math.round(parseFloat(number))).toLocaleString('en');
 }
 
@@ -70,6 +70,7 @@ class Combatant extends React.Component {
 
         return(
             <li className={`combatant ${classify(job)} ${this.props.isSelf ? 'self' : ''}`}>
+                <span className="combatant__bar" style={{width: this.props.damageOfTotal + '%'}}></span>
                 <i className="combatant__icon"></i>
                 <span className="combatant__name">{formatName(this.props.name)}</span>
 
@@ -81,7 +82,6 @@ class Combatant extends React.Component {
                 </span>
 
                 <span className="combatant__dps">{formatNumber(this.props.dps)}</span>
-                <span className="combatant__bar" style={{width: this.props.damageOfTotal + '%'}}></span>
             </li>
         );
     }

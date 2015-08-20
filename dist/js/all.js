@@ -117,6 +117,7 @@ var Combatant = (function (_React$Component2) {
             return React.createElement(
                 'li',
                 { className: 'combatant ' + classify(job) + ' ' + (this.props.isSelf ? 'self' : '') },
+                React.createElement('span', { className: 'combatant__bar', style: { width: this.props.damageOfTotal + '%' } }),
                 React.createElement('i', { className: 'combatant__icon' }),
                 React.createElement(
                     'span',
@@ -147,8 +148,7 @@ var Combatant = (function (_React$Component2) {
                     'span',
                     { className: 'combatant__dps' },
                     formatNumber(this.props.dps)
-                ),
-                React.createElement('span', { className: 'combatant__bar', style: { width: this.props.damageOfTotal + '%' } })
+                )
             );
         }
     }]);
