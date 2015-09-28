@@ -36,7 +36,6 @@ class Header extends React.Component {
             <header className={`header ${this.props.isActive ? 'active': 'inactive'}`}>
                 <div className="header__left">
                     <span className="encounter__time"><i className="encounter__status"></i> {this.props.duration}</span>
-
                 </div>
 
                 <div className="header__right">
@@ -115,7 +114,6 @@ class CombatantList extends React.Component {
                 dmgLeader = Math.max(combatants[c].damage, dmgLeader);
             }
         }
-
 
         for(var combatant in combatants) {
             if(combatants.hasOwnProperty(combatant)) {
@@ -196,9 +194,6 @@ class Overlay extends React.Component {
 }
 
 document.addEventListener('onOverlayDataUpdate', function(e) {
-
-    //console.log(e.detail);
-
     React.render(
         <Overlay parseData={e.detail} />,
 
