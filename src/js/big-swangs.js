@@ -1,37 +1,35 @@
-function classify(job) {
+var React = window.React;
+
+var classify = (job) => {
     if(typeof job === 'string') {
         return job.replace(/\s+/g, '-').toLowerCase();
     }
-}
+};
 
-function formatNumber(num) {
+var formatNumber = (num) => {
     let number = parseFloat(num);
 
     return (typeof number != 'number') ? '----' : Number(Math.round(parseFloat(number))).toLocaleString('en');
-}
+};
 
-function formatName(name) {
+var formatName = (name) => {
     let pieces = name.split(' ');
 
     return (name === 'YOU') ? name : pieces[0].substr(0, 1).toUpperCase() + '. ' + pieces[1].substr(0, 1).toUpperCase() + '.';
-}
+};
 
-function formatMaxHit(hitText) {
+var formatMaxHit = (hitText) => {
     let pieces = hitText.split('-');
 
     return pieces[0] + ' ' + pieces[1];
-}
+};
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    shouldComponentUpdate(nextProps){
+var Header = React.createClass({
+    shouldComponentUpdate: function(nextProps) {
         return nextProps.encdps !== '---';
-    }
+    },
 
-    render() {
+    render: function() {
         return (
             <header className={`header ${this.props.isActive ? 'active': 'inactive'}`}>
                 <div className="header__left">
@@ -47,10 +45,10 @@ class Header extends React.Component {
             </header>
         );
     }
-}
+});
 
-class Combatant extends React.Component {
-    render() {
+var Combatant = React.createClass({
+    render: function() {
         let misses = (parseInt(this.props.misses, 10) > 0) ? <span className="combatant__misses tag">M:{this.props.misses}</span> : '';
         let job;
 
@@ -84,10 +82,10 @@ class Combatant extends React.Component {
             </li>
         );
     }
-}
+});
 
-class LimitBreak extends React.Component {
-    render() {
+var LimitBreak = React.createClass({
+    render: function() {
         return (
             <div className="combatant limit-break">
                 <i className="combatant__icon"></i>
@@ -100,10 +98,10 @@ class LimitBreak extends React.Component {
             </div>
         );
     }
-}
+});
 
-class CombatantList extends React.Component {
-    render() {
+var CombatantList = React.createClass({
+    render: function() {
         let combatantsArray = [];
         let combatants = this.props.combatants;
         let dmgLeader = 0;
@@ -155,24 +153,18 @@ class CombatantList extends React.Component {
             </ul>
         );
     }
-}
+});
 
-class Overlay extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {isActive: props.isActive};
-    }
-
-    shouldComponentUpdate(nextProps) {
+var Overlay = React.createClass({
+    shouldComponentUpdate: (nextProps) => {
         return nextProps.parseData.Encounter.encdps !== '---';
-    }
+    },
 
-    componentWillMount() {
-        var doc = document.documentElement;
-        doc.classList.add('resizable');
-    }
+    componentWillMount: () => {
+        document.documentElement.classList.add('resizable');
+    },
 
-    render() {
+    render: function() {
         var combatant = this.props.parseData.Combatant;
         var encounter = this.props.parseData.Encounter;
 
@@ -191,7 +183,7 @@ class Overlay extends React.Component {
             </div>
         );
     }
-}
+});
 
 document.addEventListener('onOverlayDataUpdate', function(e) {
     React.render(
