@@ -1,0 +1,268 @@
+@import 'jobs';
+
+$bodyFont : 'Titillium Web', sans-serif;
+$tankColor : #2980b9;
+$healerColor : #27ae60;
+$dpsColor : #c0392b;
+$petColor : #16a085;
+$crafterColor : #7f8c8d;
+$specialColor : #f39c12;
+$unknownColor : #2c3e50;
+
+@mixin clearfix {
+    &::after {
+        clear   : both;
+        content : "";
+        display : table;
+    }
+}
+
+@mixin glow-text($baseColor: #217AA2) {
+    color       : mix($baseColor, white, 0.8);
+    text-shadow : -1px 0 3px $baseColor, 0 1px 3px $baseColor, 1px 0 3px $baseColor, 0 -1px 3px $baseColor;
+}
+
+@-webkit-keyframes pulsate {
+    0% {
+        background-color : #ff0000;
+    }
+    50% {
+        background-color : maroon;
+    }
+    100% {
+        background-color : #ff0000;
+    }
+}
+
+* {
+    margin     : 0;
+    padding    : 0;
+    box-sizing : border-box;
+}
+
+html {
+    height      : 100%;
+    padding     : 0 0 0 3px;
+    font-family : $bodyFont;
+    min-width   : 300px;
+}
+
+li {
+    list-style : none;
+}
+
+.resizable {
+    background-image    : url(../images/interface/handle.png);
+    background-position : bottom right;
+    background-repeat   : no-repeat;
+}
+
+.container {
+    background : rgba(0, 0, 0, 0.5);
+}
+
+.overlay {
+    color          : #ffffff;
+    text-transform : none;
+    letter-spacing : 1px;
+    font-size      : 12px;
+}
+
+.blank-state {
+    display    : block;
+    text-align : center;
+    font-style : italic;
+    color      : #ffffff;
+}
+
+.header {
+    @include clearfix;
+    @include glow-text;
+    padding : 5px 8px 5px 3px;
+}
+
+.header__left {
+    width : 50%;
+    float : left;
+}
+
+.header__right {
+    width : 50%;
+    float : right;
+}
+
+.encounter__time {
+    display : block;
+}
+
+.encounter__raid-dps {
+    display    : block;
+    text-align : right;
+
+    > em {
+        @include glow-text(green);
+        font-style : normal;
+    }
+}
+
+.encounter__status {
+    display         : block;
+    float           : left;
+    width           : 20px;
+    height          : 20px;
+    background      : transparent center center no-repeat;
+    background-size : contain;
+    transition      : all 0.3s ease;
+    margin          : 0 7px 0 0;
+}
+
+.toggle__maxhits {
+    display         : block;
+    float           : right;
+    width           : 20px;
+    height          : 20px;
+    background      : transparent url(../images/interface/battle_info.png) center center no-repeat;
+    background-size : contain;
+    transition      : all 0.3s ease;
+}
+
+.active {
+    .encounter__status {
+        background-image : url(../images/interface/battle_info.png);
+    }
+}
+
+.inactive {
+    .encounter__status {
+        background-image : url(../images/interface/inactive.png);
+    }
+}
+
+.combatant {
+    @include clearfix;
+    display         : flex;
+    position        : relative;
+    justify-content : space-around;
+    height          : 20px;
+    line-height     : 20px;
+
+    &.limit-break {
+        margin : 10px 0 0;
+
+        .combatant__name {
+            text-transform : uppercase;
+            font-size      : 12px;
+        }
+    }
+
+    &.last-child {
+        margin-bottom : 0;
+    }
+}
+
+.combatant__bar {
+    display    : block;
+    position   : absolute;
+    top        : 0;
+    left       : 0;
+    height     : 20px;
+    transition : all .35s ease;
+}
+
+.combatant__icon {
+    display         : block;
+    width           : 26px;
+    min-width       : 26px;
+    height          : 20px;
+    padding-right   : 2px;
+    margin-right    : 5px;
+    background      : rgba(0, 0, 0, 0.2) center center no-repeat;
+    background-size : 18px;
+    z-index         : 1;
+}
+
+.combatant__name {
+    display       : block;
+    flex-grow     : 1;
+    max-width     : 60%;
+    text-overflow : ellipsis;
+    white-space   : nowrap;
+    overflow      : hidden;
+    z-index       : 1;
+}
+
+.combatant__damage {
+    position   : relative;
+    flex-grow  : 1;
+    text-align : right;
+    padding    : 0 8px 0 0;
+    overflow   : hidden;
+}
+
+.combatant__dps {
+    display    : block;
+    position   : relative;
+    left       : 1px;
+    min-width  : 58px;
+    background : rgba(0, 0, 0, 0.2);
+    text-align : right;
+    padding    : 0 8px;
+    z-index    : 1;
+}
+
+.damage-percent,
+.damage-crit,
+.damage {
+    min-width : 32px;
+}
+
+.damage {
+    opacity : 0.8;
+}
+
+.damage-maxhit {
+    position : absolute;
+    top      : -20px;
+    right    : 0;
+}
+
+.tag {
+    display       : inline-block;
+    border-radius : 2px;
+    height        : 14px;
+    line-height   : 14px;
+    margin        : 0 0 0 8px;
+}
+
+.combatant__misses {
+    @include glow-text(red);
+    display : inline-block;
+}
+
+$rowTransparency : 0.65;
+
+$rolesToRoleColor : (
+    tank: $tankColor,
+    healer: $healerColor,
+    dps: $dpsColor,
+    pet: $petColor,
+    special: $specialColor,
+    unknown: $unknownColor,
+    crafter: $crafterColor
+);
+
+@each $job, $role in $jobs {
+    .#{$job} {
+        $roleColor : map-get($rolesToRoleColor, $role);
+
+        background-color : transparentize($roleColor, $rowTransparency);
+
+        .combatant__bar {
+            background: linear-gradient(180deg, $roleColor 0%, darken($roleColor, 5%) 100%);
+        }
+
+        .combatant__icon {
+            background-image : url('../images/class-icons/#{$job}.png');
+        }
+    }
+}

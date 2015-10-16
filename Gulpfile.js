@@ -5,6 +5,8 @@ var watch = require('gulp-watch');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');
+var browserify = require('browserify');
+var transform = require('vinyl-transform');
 var plumber = require('gulp-plumber');
 
 var paths = {
@@ -28,10 +30,17 @@ gulp.task('styles', function(){
 });
 
 gulp.task('scripts', function(){
+    var browserified = transform(function(filename){
+        var b = browserify(filename);
+
+        return b.bundle();
+    });
+
     return gulp.src(paths.scripts)
         .pipe(plumber({ errorHandler: onError }))
         .pipe(sourcemaps.init())
         .pipe(babel())
+        .pipe(browserified)
         .pipe(concat('all.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/js'))
