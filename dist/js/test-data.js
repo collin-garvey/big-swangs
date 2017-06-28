@@ -4788,7 +4788,7 @@ setTimeout(function() {
     document.dispatchEvent(event);
 }, 500);
 
-setInterval(function() {
-    var event = new CustomEvent("onOverlayDataUpdate", {"detail": ActXiv});
-    document.dispatchEvent(event);
-}, 2000);
+// setInterval(function() {
+//     var event = new CustomEvent("onOverlayDataUpdate", {"detail": ActXiv});
+//     document.dispatchEvent(event);
+// }, 2000);

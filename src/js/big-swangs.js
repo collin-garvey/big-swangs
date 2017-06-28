@@ -154,7 +154,7 @@ var CombatantList = React.createClass({
         );
     }
 });
-
+ 
 var Overlay = React.createClass({
     shouldComponentUpdate: (nextProps) => {
         return nextProps.parseData.Encounter.encdps !== '---';
